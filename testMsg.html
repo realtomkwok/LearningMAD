@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style>
+            #app {padding: 2em;}
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <message v-for="message,index in messages" :key="index" :text="message.text"></message>
+        </div>
+    </body>
+    <script>
+        Vue.component("message", {
+            props: ["text"],
+            template: `<div class="alert alert-primary">{{text}}</div>`
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                messages: [
+                    {text: "Hello, world!"},
+                    {text: "Another Hello world! LOL."}
+                ]
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <counter></counter>
+        <counter></counter>
+        <counter></counter>
+    </div>
+</body>
+<script>
+    Vue.component("counter", {
+        data() {
+            return {
+                count: 0
+            }
+        },
+        template: '<button @click="count++">You clicked me {{ count }} times.</button>'
+    })
+    var app = new Vue({
+        el: "counter"
+    })
+</script>
+</html>
