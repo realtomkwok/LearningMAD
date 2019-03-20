@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Wut?</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        @font-face {
+            font-family: "Google Sans";
+            src: url(font/GoogleSans-Medium.ttf);
+            font-weight: 600
+        }
+        @font-face {
+            font-family: "Google Sans";
+            src: url(font/GoogleSans-Regular.ttf);
+            font-weight: 300
+        }
+        #app {
+            padding: 2em;
+            font-family: "Google Sans";
+        }
+        #input {
+            padding: 1em;
+            margin: 0 auto;
+        }
+        nav {
+            background-color: #FFC107;
+            font-family: "Google Sans";
+            font-weight: 600;
+        }
+        .navbar-brand {
+            padding-left: 1em;
+        }
+        #google-product {
+            font-family: "Google Sans";
+            font-weight: 300;
+        }
+        .btn {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-light">
+        <a class="navbar-brand" href="#">
+            <span id="Google">Google</span>
+            <span id="google-product">Wut?</span>
+        </a>
+    </nav>
+    <div id="app">
+       <div class="card" style="max-width: 20rem;" id="input">
+            <p>
+                <input type="text" class="form-control d-block" placeholder="Title" v-model="cardTitle" @keypress.enter="addCard()">   
+            </p>
+            <p>
+                <textarea type="text" class="form-control d-block" placeholder="Take a note..." v-model="cardBody" @keypress.enter="addCard()"></textarea>
+            </p>
+          <button class="btn btn-primary active" @click="addCard()">add note</button>
+        </div>
+        <hr>
+        <div class="card-columns">
+            <card v-for="card, index in cards" :key="index" @remove-card="cards.splice(index, 1)"
+            :title="card.title" :body="card.body">
+            </card>
+        </div>
+    </div>
+</body>
+<script>
+    Vue.component("card", {
+        props: ["title", "body"],
+        template: `
+        <div class="card border-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{body}}</p>
+                <button class="btn btn-outline-danger" @click="$emit('remove-card')">Remove</button>
+            </div>
+        </div>
+        `
+    })
+    var app = new Vue({
+        el: "#app",
+        data: {
+            cards: [{title: "Surprise party for Kristen!", body: ""}, {title: "Google Wut?", body: "More features are on the way!"}],
+            cardTitle: "",
+            cardBody: "",
+        },
+        methods: {
+            addCard() {
+                if (!this.cardTitle)
+                if (!this.cardBody){
+              return;
+            }
+                this.cards.push({
+                    title: this.cardTitle,
+                    body: this.cardBody,
+                });
+                this.cardTitle = "";
+                this.cardBody = "";
+            },
+        }
+    })
+</script>
+</html>
