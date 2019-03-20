@@ -4,6 +4,7 @@
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Messages</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <style>
@@ -12,13 +13,17 @@
     </head>
     <body>
         <div id="app">
-            <message v-for="message,index in messages" :key="index" :text="message.text"></message>
+            <message v-for="message,index in messages" :key="index" :text="message.text" @remove-message="messages.splice(index, 1)"></message>
         </div>
     </body>
     <script>
         Vue.component("message", {
             props: ["text"],
-            template: `<div class="alert alert-primary">{{text}}</div>`
+            template: `
+            <div class="alert alert-primary">
+                <span>{{text}}</span>
+                <button class="close" @click="$emit('remove-message')">&times;</button>
+            </div>`
         })
         var app = new Vue({
             el: "#app",
