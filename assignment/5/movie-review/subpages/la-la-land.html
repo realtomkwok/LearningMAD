@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>La La Land on iTunes</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../universal.css">
+    <link rel="stylesheet" href="../subpages.css">
+    <style>
+    .hero-image {
+    background-image: url("../img/hero/la-la-land.jpg");
+    }
+    </style>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-dark">
+        <a class="navbar-brand" href="../index.html">
+            <img src="https://www.apple.com/ac/globalnav/4/en_US/images/globalnav/apple/image_large.svg" width="33" height="33" class="d-inline-block align-top" alt="">
+            <span class="nav-text">iTunes Movie Review</span>
+        </a>
+    </nav>
+    <div class="hero-image">
+    </div>
+    <div id="movies" v-for="info in info">
+        <div class="container">
+            <div class="row" id="info">
+                <div class="col">
+                    <div class="artwork">
+                        <img :src="info.artworkURL" class="card-img">
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="info">
+                        <div class="info-title">
+                            {{info.title}}
+                        </div>
+                        <div class="info-subtitle">
+                            {{info.genre}} · {{info.duration}} · {{info.year}}
+                        </div>
+                        <div class="info-body">
+                            {{info.summary}}
+                        </div>
+                        <div class="review-form">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01">Your Rating</label>
+                                </div>
+                                <select v-model="reviewRating" class="custom-select" id="inputGroupSelect01">
+                                    <option disabled value="">Choose...</option>
+                                    <option v-for="option in options" v-bind:value="option.value">
+                                        {{ option.text }}
+                                    </option>
+                                </select>
+                            </div>
+                            <textarea type="text" class="form-control d-block" v-model="reviewComment" placeholder="Leave your comment here..." @keypress.enter="sumbitReview()"></textarea>
+                            <button class="btn btn-outline-primary" @click="sumbitReview()" style="margin-top:1em;">Write an Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" id="heading">
+                    <h4> Ratings and Reviews</h4>
+                </div>   
+            </div>
+            <div class="row">
+                <div class="col">
+                    <section class="scrolling-wrapper">
+                        <review-card v-for="review, index in reverseReview" :key="index" :rating="review.rating" :comment="review.comment"></review-card>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        Copyright © 2019 Apple Inc. All rights reserved.
+    </div>
+
+
+<script>
+   Vue.component("review-card", {
+        props: ["rating", "comment"],
+        template: `
+        <div class="custom-card">
+            <h5 class="card-title">{{rating}}</h5>
+            <div class="card-text">{{comment}}</div>
+        </div>
+        `
+    })
+
+    var app = new Vue ({
+        el: "#movies",
+        data: {
+            info: [
+                {
+                    title: "La La Land",
+                    genre: "Romance",
+                    duration: "2 Hours 8 Minutes",
+                    year: "2016",
+                    summary: "Winner of 6 Academy Awards® including Best Director for writer-director Damien Chazelle, and winner of a record-breaking 7 Golden Globe® awards, La La Land is more than the most acclaimed movie of the year — it’s a cinematic treasure for the ages that you’ll fall in love with again and again. Emma Stone and Ryan Gosling star as Mia and Sebastian, an actress and a jazz musician pursuing their Hollywood dreams — and finding each other — in a vibrant celebration of hope, dreams, and love.",
+                    artworkURL: "../img/artworks/la-la-land.jpg",
+                    rating: "4.7"
+                },
+            ],
+            reviews: [
+                {
+                    rating: "Excellent",
+                    comment: "La La Land breathes new life into a bygone genre with thrillingly assured direction, powerful performances, and an irresistible excess of heart."
+                },
+                {
+                    rating: "Excellent",
+                    comment: "Audacious, retro, funny and heartfelt, La La Land is the latest great musical for people who don’t like musicals – and will slap a mile-wide smile across the most miserable of faces."
+                },
+                {
+                    rating: "Good",
+                    comment: "To rhapsodize about La La Land is to complete the experience. You want to sing its praises, literally."
+                }
+            ],
+            options: [
+                { text: 'Excellent', value: 'Excellent' },
+                { text: 'Good', value: 'Good' },
+                { text: 'Average', value: 'Average' },
+                { text: 'Poor', value: 'Poor' },
+                { text: 'Very Poor', value: 'Very Poor' },
+            ],
+            reviewRating: "",
+            reviewComment: "",
+        },
+        methods: {
+            sumbitReview() {
+                if (!this.reviewRating || !this.reviewComment){
+                    return;
+                }
+                this.reviews.push({
+                    rating: this.reviewRating,
+                    comment: this.reviewComment
+                });
+                this.reviewRating = "";
+                this.reviewComment = "";
+            }
+        },
+        computed: {
+        reverseReview() {
+            return this.reviews.reverse();
+            }
+        }
+    })
+</script>
+</body>
+</html>

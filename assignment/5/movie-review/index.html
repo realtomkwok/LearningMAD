@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trending Now</title>
+    <link rel="shortcut icon" type="image/svg" href="https://www.apple.com/ac/globalnav/4/en_US/images/globalnav/apple/image_large.svg"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="universal.css">
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-dark">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://www.apple.com/ac/globalnav/4/en_US/images/globalnav/apple/image_large.svg" width="33" height="33" class="d-inline-block align-top" alt="">
+            <span class="nav-text">iTunes Movie Review</span>
+        </a>
+    </nav>
+    <div class="hero-image">
+       <h1 class="hero-text">Tom's Collection</h1>
+    </div>
+    <div id="movies">
+        <div class="card-deck">
+            <movie-card v-for="info,index in info" :info="info" :key="index"></movie-card>
+        </div>
+    </div>
+    <div class="footer">
+        Copyright © 2019 Apple Inc. All rights reserved.
+    </div>
+<script>
+    Vue.component("movie-card", {
+        props: ["info"],
+        template:`
+        <div class="movie-card" style="width: 13rem;">
+            <a :href="'subpages/' + info.pageURL">
+            <div class="card-artwork">
+                <img :src="'img/artworks/' + info.artworkURL" class="card-img">
+            </div>
+            <div class="card-text" style="margin: 1em 1em 0em 0em;">
+                <div class="card-title">
+                    {{info.title}}
+                </div>
+                <div class="card-subtitle">
+                    {{info.genre}}
+                </div>
+            </div>           
+        </div>
+        `
+    })
+
+    var app = new Vue ({
+        el: "#movies",
+        data: {
+            info: [
+                {
+                    title: "A Star Is Born (2018)",
+                    genre: "Drama",
+                    artworkURL: "a-star-is-born.png",
+                    pageURL: "a-star-is-born.html"
+                },
+                {
+                    title: "Call Me by Your Name",
+                    genre: "Drama",
+                    artworkURL: "call-me.jpg",
+                    pageURL: "call-me-by-your-name.html"
+                },
+                {
+                    title: "La La Land",
+                    genre: "Romance",
+                    artworkURL: "la-la-land.jpg",
+                    pageURL: "la-la-land.html"
+                },
+                {
+                    title: "Bohemian Rhapsody",
+                    genre: "Drama",
+                    artworkURL: "bohemian-rhapsody.png",
+                    pageURL: "bohemian-rhapsody.html"
+                },
+                {
+                    title: "Her (2013)",
+                    genre: "Drama",
+                    artworkURL: "her.jpg",
+                    pageURL: "her.html"
+                },
+                {
+                    title: "Spider-Man: Into the Spider-Verse",
+                    genre: "Action & Adventure",
+                    artworkURL: "spider-man.jpg",
+                    pageURL: "spider-man.html"
+                },
+                {
+                    title: "Gone Girl",
+                    genre: "Drama",
+                    artworkURL: "gone-girl.jpg",
+                    pageURL: "gone-girl.html"
+                },
+                {
+                    title: "Home Alone",
+                    genre: "Comedy",
+                    artworkURL: "home-alone.jpg",
+                    pageURL: "home-alone.html"
+                },
+                {
+                    title: "The Grand Budapest Hotel",
+                    genre: "Comedy",
+                    artworkURL: "the-grand-budapest-hotel.jpg",
+                    pageURL: "the-grand-budapest-hotel.html"
+                },
+                {
+                    title: "Manchester By the Sea",
+                    genre: "Drama",
+                    artworkURL: "manchester-by-the-sea.jpg",
+                    pageURL: "manchester-by-the-sea.html"
+                },
+            ]
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manchester By the Sea on iTunes</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../universal.css">
+    <link rel="stylesheet" href="../subpages.css">
+    <style>
+    .hero-image {
+    background-image: url("../img/hero/manchester-by-the-sea.jpg");
+    }
+    </style>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-dark">
+        <a class="navbar-brand" href="../index.html">
+            <img src="https://www.apple.com/ac/globalnav/4/en_US/images/globalnav/apple/image_large.svg" width="33" height="33" class="d-inline-block align-top" alt="">
+            <span class="nav-text">iTunes Movie Review</span>
+        </a>
+    </nav>
+    <div class="hero-image">
+    </div>
+    <div id="movies" v-for="info in info">
+        <div class="container">
+            <div class="row" id="info">
+                <div class="col">
+                    <div class="artwork">
+                        <img :src="info.artworkURL" class="card-img">
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="info">
+                        <div class="info-title">
+                            {{info.title}}
+                        </div>
+                        <div class="info-subtitle">
+                            {{info.genre}} · {{info.duration}} · {{info.year}}
+                        </div>
+                        <div class="info-body">
+                            {{info.summary}}
+                        </div>
+                        <div class="review-form">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01">Your Rating</label>
+                                </div>
+                                <select v-model="reviewRating" class="custom-select" id="inputGroupSelect01">
+                                    <option disabled value="">Choose...</option>
+                                    <option v-for="option in options" v-bind:value="option.value">
+                                        {{ option.text }}
+                                    </option>
+                                </select>
+                            </div>
+                            <textarea type="text" class="form-control d-block" v-model="reviewComment" placeholder="Leave your comment here..." @keypress.enter="sumbitReview()"></textarea>
+                            <button class="btn btn-outline-primary" @click="sumbitReview()" style="margin-top:1em;">Write an Review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" id="heading">
+                    <h4> Ratings and Reviews</h4>
+                </div>   
+            </div>
+            <div class="row">
+                <div class="col">
+                    <section class="scrolling-wrapper">
+                        <review-card v-for="review, index in reverseReview" :key="index" :rating="review.rating" :comment="review.comment"></review-card>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        Copyright © 2019 Apple Inc. All rights reserved.
+    </div>
+
+
+<script>
+   Vue.component("review-card", {
+        props: ["rating", "comment"],
+        template: `
+        <div class="custom-card">
+            <h5 class="card-title">{{rating}}</h5>
+            <div class="card-text">{{comment}}</div>
+        </div>
+        `
+    })
+
+    var app = new Vue ({
+        el: "#movies",
+        data: {
+            info: [
+                {
+                    title: "Manchester By the Sea",
+                    genre: "Drama",
+                    duration: "2 Hour 17 Minutes",
+                    year: "2016",
+                    summary: "Casey Affleck heads a powerhouse cast in this acclaimed and deeply moving film from award-winning writer-director Kenneth Lonergan. After a solitary Boston janitor (Affleck) unexpectedly becomes the sole guardian of his 16-year-old nephew, he must come to terms with a past that separated him from his wife (Michelle Williams) and his hometown, as uncle and nephew unite for an unforgettable journey of love, community, sacrifice, and hope.",
+                    artworkURL: "../img/artworks/manchester-by-the-sea.jpg",
+                    rating: "3.9"
+                },
+            ],
+            reviews: [
+                {
+                    rating: "Excellent",
+                    comment: "Manchester by the Sea delivers affecting drama populated by full-bodied characters, marking another strong step forward for writer-director Kenneth Lonergan."
+                },
+            ],
+            options: [
+                { text: 'Excellent', value: 'Excellent' },
+                { text: 'Good', value: 'Good' },
+                { text: 'Average', value: 'Average' },
+                { text: 'Poor', value: 'Poor' },
+                { text: 'Very Poor', value: 'Very Poor' },
+            ],
+            reviewRating: "",
+            reviewComment: "",
+        },
+        methods: {
+            sumbitReview() {
+                if (!this.reviewRating || !this.reviewComment){
+                    return;
+                }
+                this.reviews.push({
+                    rating: this.reviewRating,
+                    comment: this.reviewComment
+                });
+                this.reviewRating = "";
+                this.reviewComment = "";
+            }
+        },
+        computed: {
+        reverseReview() {
+            return this.reviews.reverse();
+            }
+        }
+    })
+</script>
+</body>
+</html>

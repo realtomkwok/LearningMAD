@@ -1,0 +1,65 @@
+.hero-image {
+    height: 70%;
+}
+#movies {
+    position: relative;
+    top: 5%;
+}
+.row {
+    margin-left:3em;
+}
+.artwork{
+    position: relative;
+    top: -60%;
+    width: 18rem;
+    box-shadow: 0 2px 15px 0 rgba(0,0,0,0.12);
+}
+.info {
+    position: relative;
+}
+.info-title {
+    font-weight: 600;
+    font-size: 20pt;
+    color: black;
+}
+.info-subtitle {
+    font-weight: normal;
+    font-size: 12pt;
+    color: black;
+}
+.info-body {
+    margin-top: 1em;
+    font-size: 12pt;
+    color: black;
+}
+.scrolling-wrapper {
+    display: flex;
+    min-width: 100%;
+    min-height: 200px;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+}
+.custom-card {
+    display: inline-block;
+    background-color: #F8F8F8;
+    margin: 1em 1em 1em 0em;
+    width: 20rem;
+    min-width: 20rem;
+    min-height: 13rem;
+    border-radius: 5px;
+    padding: 1.5em;
+}
+
+.card-text {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    font-size: 12pt;
+}
+.review-form {
+    margin: 2em 0em 1em 0em;
+    display: block;
+    /* max-width: 500px; */
+}
