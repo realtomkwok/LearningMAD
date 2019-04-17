@@ -1,5 +1,5 @@
 # Museum Experience
-Museum Experience is a virtual exploration of various museums in New York and Bay Area, based on my visit to these musuems.
+Museum Experience is a virtual exploration of various museums in New York and Bay Area, based on my visits to these musuems.
 ## Pages
 ### Home
 * about
