@@ -1,36 +1,34 @@
 <template>
-    <div class="dropdown">
-        <input class="dropdown-input" @keydown="onKeyPress" v-model="searchText" ref="input" />
-        <div class="dropdown-content" :class="{hidden: hideOptions}">
-          <div
-            class="dropdown-item"
-            v-for="(option,index) in filteredOptions"
-            :key="index"
-            :class="{selected: index == selectedIndex}"
-          >
-            {{ option }}
-          </div>
-        </div>
-      </div>
+  <div class="dropdown">
+    <input class="dropdown-input" @keydown="onKeyPress" v-model="searchText" ref="input">
+    <div class="dropdown-content" :class="{hidden: hideOptions}">
+      <div
+        class="dropdown-item"
+        v-for="(option,index) in filteredOptions"
+        :key="index"
+        :class="{selected: index == selectedIndex}"
+      >{{ option }}</div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['options'],
+  props: ["options"],
   data() {
     return {
       selectedIndex: -1,
-      options: ["option1", "option2", "option3"],
       searchText: "",
       hideOptions: false
     };
   },
   methods: {
     focusInput() {
-      this.$refs.input.focus();
+        this.$refs.input.focus();
     },
     onKeyPress(event) {
       this.hideOptions = false;
+      if (!this.filteredOptions.length) this.selectedIndex = -1;
       if (event.key == "ArrowDown") {
         if (this.selectedIndex < this.options.length - 1) this.selectedIndex++;
         else this.selectedIndex = -1;
@@ -39,32 +37,40 @@ export default {
         else this.selectedIndex = -1;
       } else if (event.key == "Enter") {
         this.selectOption(this.selectedIndex);
+        if (this.searchText) {
+          this.$emit("option-entered", this.searchText);
+          this.searchText = "";
+        }
       }
     },
     selectOption(index) {
       if (index !== -1) {
-        this.searchText = this.options[index];
+        this.searchText = this.filteredOptions[index];
         this.hideOptions = true;
       }
-    },
-    emitToParent(event) {
-      this.$emit('childToParent', this.options)
     }
-
   },
   computed: {
-      filteredOptions() {
-          var that = this;
-          return this.options.filter(function(option){
-              return option.indexOf(that.searchText) !== -1
-          });
-      }
+    filteredOptions: function() {
+      var that = this;
+      return this.options
+        .filter(function(option, index, self) {
+          return self.indexOf(option) == index;
+        })
+        .filter(function(option) {
+          if (!that.searchText) return false;
+          return (
+            option.toLowerCase().indexOf(that.searchText.toLowerCase()) !== -1
+          );
+        });
+    }
   },
-  mounted() {
-    this.focusInput();
+  mounted () {
+      this.focusInput();
   }
 };
 </script>
+
 
 <style>
 .dropdown {

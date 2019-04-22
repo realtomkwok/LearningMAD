@@ -1,40 +1,35 @@
 <template>
   <div id="app">
-    <!-- <dropdown></dropdown> -->
-    <input type="text" v-on:keyup.enter="addItem()" v-model="newItem">
-    <li v-for="item in items" :key="item.id">
-      {{item.content}}
-    </li>
+    <div class="todo">
+      <ul>
+        <li v-for="(item,index) in items" :key="index">{{item}}</li>
+      </ul>
+      <mydropdown :options="items" @option-entered="addItem"></mydropdown>
+    </div>
   </div>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
-import dropdown from "./components/MyDropdown.vue";
-
+import mydropdown from "./components/MyDropdown.vue";
 export default {
-  name: 'app',
-  components: {
-    dropdown
-  },
+  name: "app",
+  components: { mydropdown },
   data() {
     return {
-      items: this.$children.options,
-      newItem: "",
-    }
+      items: ["apple", "orange"]
+    };
   },
   methods: {
-    addItem() {
-        if (!this.newItem) {return}
-        this.items.push({content:this.newItem})
-        this.newItem = ""
-    },
+    addItem: function(item) {
+      this.items.push(item);
+    }
   }
-}
+};
 </script>
 
 <style>
-  #app {
-    margin: 1em;
-  }
+.todo {
+  width: 30%;
+  margin: auto;
+}
 </style>
