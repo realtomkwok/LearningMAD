@@ -1,0 +1,29 @@
+{
+  "pages": [
+      "pages/index/main", 
+      "pages/timer/main",
+      "pages/settings/main"
+    ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "iconPath": "/static/images/home.png",
+        "selectedIconPath": "/static/images/home.png",
+        "text": "Home"
+      },
+      {
+        "pagePath": "pages/settings/main",
+        "iconPath": "/static/images/settings.png",
+        "selectedIconPath": "/static/images/settings.png",
+        "text": "Settings"
+      }
+    ]
+  }
+}
